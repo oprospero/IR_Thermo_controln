@@ -1,0 +1,41 @@
+{
+    "name": "IRremoteESP8266", 
+    "repository": {
+        "url": "https://github.com/markszabo/IRremoteESP8266.git", 
+        "type": "git"
+    }, 
+    "platforms": [
+        "espressif8266"
+    ], 
+    "frameworks": [
+        "arduino"
+    ], 
+    "version": "1.0.0", 
+    "authors": [
+        {
+            "url": null, 
+            "maintainer": false, 
+            "email": "zetoslab@gmail.com", 
+            "name": "Ken Shirriff"
+        }, 
+        {
+            "url": "http://nomartini-noparty.blogspot.com/", 
+            "maintainer": false, 
+            "email": null, 
+            "name": "Mark Szabo"
+        }, 
+        {
+            "maintainer": true, 
+            "name": "Sebastien Warin", 
+            "url": "http://sebastien.warin.fr", 
+            "email": null
+        }
+    ], 
+    "keywords": [
+        "ir", 
+        "remote", 
+        "infrared"
+    ], 
+    "id": 1089, 
+    "description": "Send and receive infrared signals with multiple protocols (ESP8266)"
+}
