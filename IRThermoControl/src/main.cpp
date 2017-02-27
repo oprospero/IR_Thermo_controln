@@ -8,7 +8,7 @@
 
 // You should get Auth Token in the Blynk App.
 // Go to the Project Settings (nut icon).
-char auth[] = "YourAuthToken";
+char auth[] = "3771a29413a54d7387eaae537228ed95";
 
 // Your WiFi credentials.
 // Set password to "" for open networks.
@@ -17,12 +17,20 @@ char pass[] = "SeanSarahMack123";
 
 IRsend IrOut(IR_LED_PIN);
 
+// BLYNK_CONNECTED() {
+//   if (isFirstConnect) {
+//     Blynk.syncAll();
+//   }
+// }
+
 void setup()
 {
-
+  Serial.begin(9600);
+  IrOut.begin();
+  Blynk.begin(auth, ssid, pass);
 }
 
 void loop()
 {
-
+  Blynk.run();
 }
