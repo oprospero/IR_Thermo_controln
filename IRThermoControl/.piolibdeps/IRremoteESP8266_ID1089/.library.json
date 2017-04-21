@@ -10,7 +10,7 @@
     "frameworks": [
         "arduino"
     ], 
-    "version": "1.0.0", 
+    "version": "1.1.1", 
     "authors": [
         {
             "url": null, 
@@ -19,21 +19,40 @@
             "name": "Ken Shirriff"
         }, 
         {
+            "maintainer": true, 
+            "name": "Mark Szabo", 
             "url": "http://nomartini-noparty.blogspot.com/", 
-            "maintainer": false, 
-            "email": null, 
-            "name": "Mark Szabo"
+            "email": null
         }, 
         {
             "maintainer": true, 
             "name": "Sebastien Warin", 
             "url": "http://sebastien.warin.fr", 
             "email": null
+        }, 
+        {
+            "maintainer": true, 
+            "name": "David Conran", 
+            "url": "https://plus.google.com/+davidconran", 
+            "email": null
+        }, 
+        {
+            "maintainer": true, 
+            "name": "Roi Dayan", 
+            "url": "https://github.com/roidayan/", 
+            "email": null
+        }, 
+        {
+            "maintainer": true, 
+            "name": "Massimiliano Pinto", 
+            "url": "https://github.com/pintomax/", 
+            "email": null
         }
     ], 
     "keywords": [
         "ir", 
         "remote", 
+        "esp8266", 
         "infrared"
     ], 
     "id": 1089, 

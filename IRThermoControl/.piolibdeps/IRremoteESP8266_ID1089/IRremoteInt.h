@@ -18,6 +18,8 @@
  * Denon: sendDenon, decodeDenon added by Massimiliano Pinto
           (from https://github.com/z3t0/Arduino-IRremote/blob/master/ir_Denon.cpp)
  * Kelvinator A/C added by crankyoldgit
+ * Mitsubishi A/C added by crankyoldgit
+ *     (based on https://github.com/r45635/HVAC-IR-Control)
  *
  * 09/23/2015 : Samsung pulse parameters updated by Sebastien Warin to be compatible with EUxxD6200
  *
@@ -56,13 +58,13 @@
 #define NEC_ONE_SPACE	1690
 #define NEC_ZERO_SPACE	560
 #define NEC_RPT_SPACE	2250
-#define NEC_CODE_TO_RPT_SPACE 40500U
-#define NEC_RPT_FOOTER 96000UL
+#define NEC_MIN_COMMAND_LENGTH 108000UL
 
+// Timings based on http://www.sbprojects.com/knowledge/ir/sirc.php
 #define SONY_HDR_MARK	2400
 #define SONY_HDR_SPACE	600
-#define SONY_ONE_MARK	1200
-#define SONY_ZERO_MARK	600
+#define SONY_ONE_MARK	1250  // Experiments suggest +50 to spec is better.
+#define SONY_ZERO_MARK	650  // Experiments suggest +50 to spec is better.
 #define SONY_RPT_LENGTH 45000
 #define SONY_DOUBLE_SPACE_USECS  500  // usually see 713 - not using ticks as get number wrapround
 
@@ -84,6 +86,17 @@
 // #define MITSUBISHI_DOUBLE_SPACE_USECS  800  // usually ssee 713 - not using ticks as get number wrapround
 // #define MITSUBISHI_RPT_LENGTH 45000
 
+// Mitsubishi A/C
+// Values were initially obtained from:
+//   https://github.com/r45635/HVAC-IR-Control/blob/master/HVAC_ESP8266/HVAC_ESP8266.ino#L84
+#define MITSUBISHI_AC_HDR_MARK    3400
+#define MITSUBISHI_AC_HDR_SPACE   1750
+#define MITSUBISHI_AC_BIT_MARK    450
+#define MITSUBISHI_AC_ONE_SPACE   1300
+#define MITSUBISHI_AC_ZERO_SPACE  420
+#define MITSUBISHI_AC_RPT_MARK    440
+#define MITSUBISHI_AC_RPT_SPACE   17100L
+
 
 #define RC5_T1		889
 #define RC5_RPT_LENGTH	46000
@@ -92,6 +105,16 @@
 #define RC6_HDR_SPACE	889
 #define RC6_T1		444
 #define RC6_RPT_LENGTH	46000
+
+// http://www.sbprojects.com/knowledge/ir/rcmm.php
+#define RCMM_HDR_MARK 416
+#define RCMM_HDR_SPACE 277
+#define RCMM_BIT_MARK 166
+#define RCMM_BIT_SPACE_0 177
+#define RCMM_BIT_SPACE_1 444
+#define RCMM_BIT_SPACE_2 611
+#define RCMM_BIT_SPACE_3 777
+#define RCMM_RPT_LENGTH 27778
 
 #define SHARP_BIT_MARK 245
 #define SHARP_ONE_SPACE 1805
@@ -106,7 +129,6 @@
 #define DISH_ONE_SPACE 1700
 #define DISH_ZERO_SPACE 2800
 #define DISH_RPT_SPACE 6200
-#define DISH_TOP_BIT 0x8000
 
 #define PANASONIC_HDR_MARK 3502
 #define PANASONIC_HDR_SPACE 1750
@@ -188,9 +210,6 @@
 #define STATE_SPACE    4
 #define STATE_STOP     5
 
-#define ERR 0
-#define DECODED 1
-
 // information for the interrupt handler
 typedef struct {
   uint8_t recvpin;           // pin for IR data from detector
@@ -198,6 +217,7 @@ typedef struct {
   unsigned int timer;     // state timer, counts 50uS ticks.
   unsigned int rawbuf[RAWBUF]; // raw data
   uint8_t rawlen;         // counter of entries in rawbuf
+  uint8_t overflow;
 }
 irparams_t;
 
