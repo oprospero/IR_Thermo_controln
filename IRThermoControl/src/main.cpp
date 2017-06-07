@@ -14,13 +14,10 @@ char auth[] = "3771a29413a54d7387eaae537228ed95";
 char ssid[] = "HouseOfMack_EXT";
 char pass[] = "SeanSaraMack123";
 
+#define IR_LED_PIN D0
+
 // IRsend IrOut(IR_LED_PIN);
 
-// BLYNK_CONNECTED() {
-//   if (isFirstConnect) {
-//     Blynk.syncAll();
-//   }
-// }
 
 void setup()
 {
@@ -28,6 +25,14 @@ void setup()
   Blynk.begin(auth, ssid, pass);
   // IrOut.begin();
   Serial.println("Ready Player One");
+  pinMode(D0, OUTPUT);
+  digitalWrite(D0, HIGH);
+}
+
+BLYNK_WRITE(V0)
+{
+    bool value = param.asInt();
+    digitalWrite(D0, value);
 }
 
 void loop()
