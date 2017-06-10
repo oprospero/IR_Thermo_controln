@@ -1,4 +1,4 @@
-
+#define BLYNK_PRINT Serial
 #include <Arduino.h>
 #include <ESP8266WiFi.h>
 #include "IRremoteESP8266.h"
@@ -12,7 +12,7 @@ char auth[] = "3771a29413a54d7387eaae537228ed95";
 // Your WiFi credentials.
 // Set password to "" for open networks.
 char ssid[] = "HouseOfMack_EXT";
-char pass[] = "SeanSarahMack123";
+char pass[] = "SeanSaraMack123";
 
 // IRsend IrOut(IR_LED_PIN);
 
@@ -25,11 +25,13 @@ char pass[] = "SeanSarahMack123";
 void setup()
 {
   Serial.begin(9600);
-  // IrOut.begin();
   Blynk.begin(auth, ssid, pass);
+  // IrOut.begin();
+  Serial.println("Ready Player One");
 }
 
 void loop()
 {
+
   Blynk.run();
 }
