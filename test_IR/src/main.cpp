@@ -7,8 +7,9 @@ IRrecv recv(PIN_IR_INPUT);
 IRsend snd(PIN_IR_OUTPUT);
 decode_results results;
 unsigned int codes[256];
-const int st = 425;
-const int lt = 1275;
+const int st = 450;
+const int lt = 1300;
+const int et = 8100;
 unsigned int codeTimer[] =
 {
     lt, st,
@@ -22,7 +23,7 @@ unsigned int codeTimer[] =
     st, lt,
     st, lt,
     lt, st,
-    st, 8100
+    st, et
 };
 
 void setup()
